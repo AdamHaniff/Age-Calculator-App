@@ -10,6 +10,12 @@
       sizes="32x32"
       href="./assets/images/favicon-32x32.png"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,400;1,800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/main.css" />
     <script type="module" defer src="main.js"></script>
   </head>
@@ -18,20 +24,44 @@
       <div class="app-container">
         <form class="form">
           <div class="form__labels">
-            <label for="day" class="form__label"
+            <label for="day" class="form__label" id="form-label-day"
               >Day
-              <input type="text" class="form__input" id="day" maxlength="2" />
-              <span class="form__error">Must be a valid day</span>
+              <input
+                type="text"
+                class="form__input"
+                id="day"
+                maxlength="2"
+                placeholder="DD"
+              />
+              <span class="form__error" id="form-error-day"
+                >Must be a valid day</span
+              >
             </label>
-            <label for="month" class="form__label"
+            <label for="month" class="form__label" id="form-label-month"
               >Month
-              <input type="text" class="form__input" id="month" maxlength="2" />
-              <span class="form__error">Must be a valid month</span>
+              <input
+                type="text"
+                class="form__input"
+                id="month"
+                maxlength="2"
+                placeholder="MM"
+              />
+              <span class="form__error" id="form-error-month"
+                >Must be a valid month</span
+              >
             </label>
-            <label for="year" class="form__label"
+            <label for="year" class="form__label" id="form-label-year"
               >Year
-              <input type="text" class="form__input" id="year" maxlength="4" />
-              <span class="form__error">Must be in the past</span>
+              <input
+                type="text"
+                class="form__input"
+                id="year"
+                maxlength="4"
+                placeholder="YYYY"
+              />
+              <span class="form__error" id="form-error-year"
+                >Must be in the past</span
+              >
             </label>
           </div>
           <div class="form__line-btn-container">
@@ -40,12 +70,25 @@
               <img
                 src="./assets/images/icon-arrow.svg"
                 alt="Arrow icon"
-                class="form__btn--icon"
+                class="form__btn-icon"
               />
             </button>
           </div>
         </form>
-        <div class="calculation-container"></div>
+        <div class="calculation">
+          <div class="calculation__years">
+            <span class="calculation__years-number">- -</span>
+            <span class="calculation__years-text">years</span>
+          </div>
+          <div class="calculation__months">
+            <span class="calculation__months-number">- -</span>
+            <span class="calculation__months-text">months</span>
+          </div>
+          <div class="calculation__days">
+            <span class="calculation__days-number">- -</span>
+            <span class="calculation__days-text">days</span>
+          </div>
+        </div>
       </div>
     </main>
   </body>
