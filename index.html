@@ -13,5 +13,40 @@
     <link rel="stylesheet" href="css/main.css" />
     <script type="module" defer src="main.js"></script>
   </head>
-  <body></body>
+  <body>
+    <main>
+      <div class="app-container">
+        <form class="form">
+          <div class="form__labels">
+            <label for="day" class="form__label"
+              >Day
+              <input type="text" class="form__input" id="day" maxlength="2" />
+              <span class="form__error">Must be a valid day</span>
+            </label>
+            <label for="month" class="form__label"
+              >Month
+              <input type="text" class="form__input" id="month" maxlength="2" />
+              <span class="form__error">Must be a valid month</span>
+            </label>
+            <label for="year" class="form__label"
+              >Year
+              <input type="text" class="form__input" id="year" maxlength="4" />
+              <span class="form__error">Must be in the past</span>
+            </label>
+          </div>
+          <div class="form__line-btn-container">
+            <hr class="form__line" />
+            <button class="form__btn" type="button">
+              <img
+                src="./assets/images/icon-arrow.svg"
+                alt="Arrow icon"
+                class="form__btn--icon"
+              />
+            </button>
+          </div>
+        </form>
+        <div class="calculation-container"></div>
+      </div>
+    </main>
+  </body>
 </html>
