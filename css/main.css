@@ -76,6 +76,7 @@ body {
 }
 .form__line-btn-container {
   height: 0.1rem;
+  margin-bottom: 6.35rem;
 }
 .form__line {
   border: 0.1rem solid #dcdcdc;
@@ -92,4 +93,22 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.calculation {
+  font-size: 5.4rem;
+  font-style: italic;
+  font-weight: 800;
+  line-height: 6.16rem;
+  letter-spacing: -0.112rem;
+}
+.calculation__container {
+  display: flex;
+  gap: 0.8rem;
+}
+.calculation__number {
+  color: #854dff;
+}
+.calculation__unit {
+  color: #151515;
 }/*# sourceMappingURL=main.css.map */
