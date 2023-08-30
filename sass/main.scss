@@ -90,6 +90,11 @@ body {
       outline: none;
       border-color: $color-input-focus;
     }
+
+    &:-webkit-autofill {
+      background-color: transparent;
+      box-shadow: 0 0 0 5rem $color-app-background inset;
+    }
   }
 
   &__error {
