@@ -10,14 +10,48 @@ const yearsCalculation = document.getElementById("calculation-years");
 const monthsCalculation = document.getElementById("calculation-months");
 const daysCalculation = document.getElementById("calculation-days");
 
-// EVENT LISTENER
-formBtn.addEventListener("click", function (e) {
+// EVENT LISTENER CALLBACK FUNCTION
+function handleFormBtnClick(e) {
   const btn = e.target.closest(".form__btn");
+  if (!btn) return;
+
+  // Get user input
+  const birthDay = parseInt(dayInput.value);
+  const birthMonth = parseInt(monthInput.value) - 1;
+  const birthYear = parseInt(yearInput.value);
+
+  // Get current date
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth() + 1;
+  const currentMonth = currentDate.getMonth();
   const currentDay = currentDate.getDate();
-  const birthDay = dayInput.value;
-  const birthMonth = monthInput.value;
-  const birthYear = yearInput.value;
-});
+
+  // Calculate age
+  let years = currentYear - birthYear;
+  let months = currentMonth - birthMonth;
+  let days = currentDay - birthDay;
+
+  // Adjust for negative months or days
+  if (days < 0) {
+    months--;
+    const daysInPreviousMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      0
+    ).getDate();
+    days += daysInPreviousMonth;
+  }
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  // Display result
+  yearsCalculation.textContent = years;
+  monthsCalculation.textContent = months;
+  daysCalculation.textContent = days;
+}
+
+// EVENT LISTENER
+formBtn.addEventListener("click", handleFormBtnClick);
