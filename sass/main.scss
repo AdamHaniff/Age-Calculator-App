@@ -14,6 +14,10 @@ $color-error: #ff5959;
 $color-placeholder: rgb(21, 21, 21, 0.5);
 $color-input-focus: #854dff;
 
+:root {
+  --color-error: #{$color-error};
+}
+
 // ********** FONT-FAMILY ***********
 $font-primary: "Poppins", sans-serif;
 
@@ -106,7 +110,6 @@ body {
     font-weight: initial;
     display: inline-block;
     margin-top: 0.4rem;
-    display: none;
   }
 
   &__line-btn-container {
@@ -153,4 +156,9 @@ body {
   &__unit {
     color: $color-calculation-unit;
   }
+}
+
+// *** CLASS USED WITH JAVASCRIPT ***
+.hidden {
+  display: none;
 }

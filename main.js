@@ -12,6 +12,14 @@ const daysCalculation = document.getElementById("calculation-days");
 const yearsUnit = document.getElementById("calculation-unit-years");
 const monthsUnit = document.getElementById("calculation-unit-months");
 const daysUnit = document.getElementById("calculation-unit-days");
+const formLabels = document.querySelectorAll(".form__label");
+const formInputs = document.querySelectorAll(".form__input");
+const colorError = getComputedStyle(document.documentElement).getPropertyValue(
+  "--color-error"
+);
+const formErrorDay = document.getElementById("form-error-day");
+const formErrorMonth = document.getElementById("form-error-month");
+const formErrorYear = document.getElementById("form-error-year");
 
 // HELPER FUNCTIONS
 function updateUnitText(element, value, singularText, pluralText) {
@@ -20,6 +28,18 @@ function updateUnitText(element, value, singularText, pluralText) {
 
 function addLeadingZero(inputElement) {
   inputElement.value = inputElement.value.padStart(2, "0");
+}
+
+function turnLabelsRed() {
+  formLabels.forEach((label) => {
+    label.style.color = colorError;
+  });
+}
+
+function turnInputBordersRed() {
+  formInputs.forEach((input) => {
+    input.style.borderColor = colorError;
+  });
 }
 
 // FUNCTIONS
@@ -71,6 +91,10 @@ function handleFormBtnClick(e) {
   const formBtn = e.target.closest(".form__btn");
   if (!formBtn) return;
 
+  // Error handler
+  isValidDay(parseInt(dayInput.value));
+  isValidMonth(parseInt(monthInput.value));
+
   // Add a leading 0 to input elements
   addLeadingZero(dayInput);
   addLeadingZero(monthInput);
@@ -87,3 +111,36 @@ function handleFormBtnClick(e) {
 
 // EVENT LISTENER
 formBtn.addEventListener("click", handleFormBtnClick);
+
+// ERROR HANDLING
+function isValidDay(dayInputValue) {
+  if (dayInputValue < 1 || dayInputValue > 31) {
+    // Turn every label red
+    turnLabelsRed();
+
+    // Turn every input border red
+    turnInputBordersRed();
+
+    // Display form error
+    formErrorDay.classList.remove("hidden");
+    formErrorDay.textContent = "Must be a valid day";
+
+    return false;
+  }
+
+  return true;
+}
+
+function isValidMonth(monthInputValue) {
+  if (monthInputValue < 1 || monthInputValue > 12) {
+    // Turn every label red
+    turnLabelsRed();
+
+    // Turn every input border red
+    turnInputBordersRed();
+
+    // Display form error
+    formErrorMonth.classList.remove("hidden");
+    formErrorMonth.textContent = "Must be a valid month";
+  }
+}

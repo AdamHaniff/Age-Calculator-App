@@ -1,3 +1,7 @@
+:root {
+  --color-error: #ff5959;
+}
+
 *,
 *::before,
 *::after {
@@ -76,7 +80,6 @@ body {
   font-weight: initial;
   display: inline-block;
   margin-top: 0.4rem;
-  display: none;
 }
 .form__line-btn-container {
   height: 0.1rem;
@@ -115,4 +118,8 @@ body {
 }
 .calculation__unit {
   color: #151515;
+}
+
+.hidden {
+  display: none;
 }/*# sourceMappingURL=main.css.map */
