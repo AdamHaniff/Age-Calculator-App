@@ -31,15 +31,34 @@ function addLeadingZero(inputElement) {
 }
 
 function turnLabelsRed() {
+  // Turn every label red
   formLabels.forEach((label) => {
     label.style.color = colorError;
   });
 }
 
 function turnInputBordersRed() {
+  // Turn every input border red
   formInputs.forEach((input) => {
     input.style.borderColor = colorError;
   });
+}
+
+function displayFormError(element, error) {
+  element.classList.remove("hidden");
+  element.textContent = error;
+}
+
+function handleInvalidInput(element, error) {
+  turnLabelsRed();
+  turnInputBordersRed();
+  displayFormError(element, error);
+
+  return false;
+}
+
+function isInputEmpty(inputValue) {
+  return inputValue === "";
 }
 
 // FUNCTIONS
@@ -92,8 +111,11 @@ function handleFormBtnClick(e) {
   if (!formBtn) return;
 
   // Error handler
-  isValidDay(parseInt(dayInput.value));
-  isValidMonth(parseInt(monthInput.value));
+  const isDayValid = isValidDay(dayInput.value);
+  const isMonthValid = isValidMonth(monthInput.value);
+  const isYearValid = isValidYear(yearInput.value);
+
+  if (!isDayValid || !isMonthValid || !isYearValid) return;
 
   // Add a leading 0 to input elements
   addLeadingZero(dayInput);
@@ -113,34 +135,49 @@ function handleFormBtnClick(e) {
 formBtn.addEventListener("click", handleFormBtnClick);
 
 // ERROR HANDLING
-function isValidDay(dayInputValue) {
-  if (dayInputValue < 1 || dayInputValue > 31) {
-    // Turn every label red
-    turnLabelsRed();
+function isValidDay(birthDayValue) {
+  const birthDay = parseInt(birthDayValue);
 
-    // Turn every input border red
-    turnInputBordersRed();
+  if (isInputEmpty(birthDayValue)) {
+    handleInvalidInput(formErrorDay, "This field is required");
+  }
 
-    // Display form error
-    formErrorDay.classList.remove("hidden");
-    formErrorDay.textContent = "Must be a valid day";
-
-    return false;
+  if (!(birthDay > 0) || birthDay > 31 || isNaN(birthDayValue)) {
+    handleInvalidInput(formErrorDay, "Must be a valid day");
   }
 
   return true;
 }
 
-function isValidMonth(monthInputValue) {
-  if (monthInputValue < 1 || monthInputValue > 12) {
-    // Turn every label red
-    turnLabelsRed();
+function isValidMonth(birthMonthValue) {
+  const birthMonth = parseInt(birthMonthValue);
 
-    // Turn every input border red
-    turnInputBordersRed();
+  if (isInputEmpty(birthMonthValue)) {
+    handleInvalidInput(formErrorMonth, "This field is required");
+  }
 
-    // Display form error
-    formErrorMonth.classList.remove("hidden");
-    formErrorMonth.textContent = "Must be a valid month";
+  if (!(birthMonth > 0) || birthMonth > 12 || isNaN(birthMonthValue)) {
+    handleInvalidInput(formErrorMonth, "Must be a valid month");
+  }
+
+  return true;
+}
+
+function isValidYear(birthYearValue) {
+  const birthYear = parseInt(birthYearValue);
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+
+  if (isInputEmpty(birthYearValue)) {
+    handleInvalidInput(formErrorYear, "This field is required");
+  }
+
+  if (birthYear < 0 || isNaN(birthYearValue)) {
+    handleInvalidInput(formErrorYear, "Must be a valid year");
+  }
+
+  // Check if birth year is in the future
+  if (birthYear > currentYear) {
+    handleInvalidInput(formErrorYear, "Must be in the past");
   }
 }
