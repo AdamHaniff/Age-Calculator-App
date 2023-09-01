@@ -53,12 +53,25 @@ function handleInvalidInput(element, error) {
   turnLabelsRed();
   turnInputBordersRed();
   displayFormError(element, error);
-
-  return false;
 }
 
 function isInputEmpty(inputValue) {
   return inputValue === "";
+}
+
+function isValidDate(birthDay) {
+  // Check if a date is greater than the number of days in a month
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const birthMonth = parseInt(monthInput.value);
+  const daysInBirthMonth = new Date(currentYear, birthMonth, 0).getDate();
+
+  if (birthDay > daysInBirthMonth) {
+    handleInvalidInput(formErrorDay, "Must be a valid date");
+    return false;
+  }
+
+  return true;
 }
 
 // FUNCTIONS
@@ -140,11 +153,15 @@ function isValidDay(birthDayValue) {
 
   if (isInputEmpty(birthDayValue)) {
     handleInvalidInput(formErrorDay, "This field is required");
+    return false;
   }
 
   if (!(birthDay > 0) || birthDay > 31 || isNaN(birthDayValue)) {
     handleInvalidInput(formErrorDay, "Must be a valid day");
+    return false;
   }
+
+  if (!isValidDate(birthDay)) return false;
 
   return true;
 }
@@ -154,10 +171,12 @@ function isValidMonth(birthMonthValue) {
 
   if (isInputEmpty(birthMonthValue)) {
     handleInvalidInput(formErrorMonth, "This field is required");
+    return false;
   }
 
   if (!(birthMonth > 0) || birthMonth > 12 || isNaN(birthMonthValue)) {
     handleInvalidInput(formErrorMonth, "Must be a valid month");
+    return false;
   }
 
   return true;
@@ -170,14 +189,19 @@ function isValidYear(birthYearValue) {
 
   if (isInputEmpty(birthYearValue)) {
     handleInvalidInput(formErrorYear, "This field is required");
+    return false;
   }
 
   if (birthYear < 0 || isNaN(birthYearValue)) {
     handleInvalidInput(formErrorYear, "Must be a valid year");
+    return false;
   }
 
   // Check if birth year is in the future
   if (birthYear > currentYear) {
     handleInvalidInput(formErrorYear, "Must be in the past");
+    return false;
   }
+
+  return true;
 }
