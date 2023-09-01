@@ -1,5 +1,7 @@
 :root {
   --color-error: #ff5959;
+  --color-input-label: #716f6f;
+  --color-input-border: #dcdcdc;
 }
 
 *,

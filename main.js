@@ -6,6 +6,7 @@ const dayInput = document.getElementById("day");
 const monthInput = document.getElementById("month");
 const yearInput = document.getElementById("year");
 const formBtn = document.querySelector(".form__btn");
+const calculationNumbers = document.querySelectorAll(".calculation__number");
 const yearsCalculation = document.getElementById("calculation-years");
 const monthsCalculation = document.getElementById("calculation-months");
 const daysCalculation = document.getElementById("calculation-days");
@@ -14,12 +15,19 @@ const monthsUnit = document.getElementById("calculation-unit-months");
 const daysUnit = document.getElementById("calculation-unit-days");
 const formLabels = document.querySelectorAll(".form__label");
 const formInputs = document.querySelectorAll(".form__input");
-const colorError = getComputedStyle(document.documentElement).getPropertyValue(
-  "--color-error"
-);
+const formErrors = document.querySelectorAll(".form__error");
 const formErrorDay = document.getElementById("form-error-day");
 const formErrorMonth = document.getElementById("form-error-month");
 const formErrorYear = document.getElementById("form-error-year");
+const colorError = getComputedStyle(document.documentElement).getPropertyValue(
+  "--color-error"
+);
+const colorInputLabel = getComputedStyle(
+  document.documentElement
+).getPropertyValue("--color-input-label");
+const colorInputBorder = getComputedStyle(
+  document.documentElement
+).getPropertyValue("--color-input-border");
 
 // HELPER FUNCTIONS
 function updateUnitText(element, value, singularText, pluralText) {
@@ -30,17 +38,17 @@ function addLeadingZero(inputElement) {
   inputElement.value = inputElement.value.padStart(2, "0");
 }
 
-function turnLabelsRed() {
-  // Turn every label red
+function changeLabelColor(color) {
+  // Turn every label a certain color
   formLabels.forEach((label) => {
-    label.style.color = colorError;
+    label.style.color = color;
   });
 }
 
-function turnInputBordersRed() {
-  // Turn every input border red
+function changeInputBorderColor(color) {
+  // Turn every input border a certain color
   formInputs.forEach((input) => {
-    input.style.borderColor = colorError;
+    input.style.borderColor = color;
   });
 }
 
@@ -50,8 +58,8 @@ function displayFormError(element, error) {
 }
 
 function handleInvalidInput(element, error) {
-  turnLabelsRed();
-  turnInputBordersRed();
+  changeLabelColor(colorError);
+  changeInputBorderColor(colorError);
   displayFormError(element, error);
 }
 
@@ -59,19 +67,16 @@ function isInputEmpty(inputValue) {
   return inputValue === "";
 }
 
-function isValidDate(birthDay) {
-  // Check if a date is greater than the number of days in a month
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const birthMonth = parseInt(monthInput.value);
-  const daysInBirthMonth = new Date(currentYear, birthMonth, 0).getDate();
+function hideFormErrors() {
+  formErrors.forEach((error) => {
+    error.classList.add("hidden");
+  });
+}
 
-  if (birthDay > daysInBirthMonth) {
-    handleInvalidInput(formErrorDay, "Must be a valid date");
-    return false;
-  }
-
-  return true;
+function resetValidationStyles() {
+  changeLabelColor(colorInputLabel);
+  changeInputBorderColor(colorInputBorder);
+  hideFormErrors();
 }
 
 // FUNCTIONS
@@ -130,6 +135,8 @@ function handleFormBtnClick(e) {
 
   if (!isDayValid || !isMonthValid || !isYearValid) return;
 
+  resetValidationStyles();
+
   // Add a leading 0 to input elements
   addLeadingZero(dayInput);
   addLeadingZero(monthInput);
@@ -144,10 +151,22 @@ function handleFormBtnClick(e) {
   displayAgeCalculations(years, months, days);
 }
 
-// EVENT LISTENER
-formBtn.addEventListener("click", handleFormBtnClick);
-
 // ERROR HANDLING
+function isValidDate(birthDay) {
+  // Check if a date is greater than the number of days in a month
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const birthMonth = parseInt(monthInput.value);
+  const daysInBirthMonth = new Date(currentYear, birthMonth, 0).getDate();
+
+  if (birthDay > daysInBirthMonth) {
+    handleInvalidInput(formErrorDay, "Must be a valid date");
+    return false;
+  }
+
+  return true;
+}
+
 function isValidDay(birthDayValue) {
   const birthDay = parseInt(birthDayValue);
 
@@ -205,3 +224,22 @@ function isValidYear(birthYearValue) {
 
   return true;
 }
+
+// EVENT LISTENER
+formBtn.addEventListener("click", handleFormBtnClick);
+// formLabels.addEventListener("input", function (e) {
+//   const target = e.target;
+
+//   if (target.tagName === "INPUT") {
+//     const inputs = formLabels.querySelectorAll(".form__input");
+//     const areAllEmpty = Array.from(inputs).every((input) =>
+//       isInputEmpty(input.value)
+//     );
+
+//     if (areAllEmpty) {
+//       forEach.calculationNumbers((el) => {
+//         el.textContent = "- -";
+//       });
+//     }
+//   }
+// });
