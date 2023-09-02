@@ -13,6 +13,7 @@ const daysCalculation = document.getElementById("calculation-days");
 const yearsUnit = document.getElementById("calculation-unit-years");
 const monthsUnit = document.getElementById("calculation-unit-months");
 const daysUnit = document.getElementById("calculation-unit-days");
+const formLabelsContainer = document.querySelector(".form__labels");
 const formLabels = document.querySelectorAll(".form__label");
 const formInputs = document.querySelectorAll(".form__input");
 const formErrors = document.querySelectorAll(".form__error");
@@ -38,17 +39,15 @@ function addLeadingZero(inputElement) {
   inputElement.value = inputElement.value.padStart(2, "0");
 }
 
-function changeLabelColor(color) {
-  // Turn every label a certain color
-  formLabels.forEach((label) => {
-    label.style.color = color;
+function changeElementsColor(color, elements) {
+  elements.forEach((el) => {
+    el.style.color = color;
   });
 }
 
-function changeInputBorderColor(color) {
-  // Turn every input border a certain color
-  formInputs.forEach((input) => {
-    input.style.borderColor = color;
+function changeElementsBorderColor(color, elements) {
+  elements.forEach((el) => {
+    el.style.borderColor = color;
   });
 }
 
@@ -58,8 +57,8 @@ function displayFormError(element, error) {
 }
 
 function handleInvalidInput(element, error) {
-  changeLabelColor(colorError);
-  changeInputBorderColor(colorError);
+  changeElementsColor(colorError, formLabels);
+  changeElementsBorderColor(colorError, formInputs);
   displayFormError(element, error);
 }
 
@@ -67,16 +66,16 @@ function isInputEmpty(inputValue) {
   return inputValue === "";
 }
 
-function hideFormErrors() {
-  formErrors.forEach((error) => {
-    error.classList.add("hidden");
+function hideElements(elements) {
+  elements.forEach((el) => {
+    el.classList.add("hidden");
   });
 }
 
 function resetValidationStyles() {
-  changeLabelColor(colorInputLabel);
-  changeInputBorderColor(colorInputBorder);
-  hideFormErrors();
+  changeElementsColor(colorInputLabel, formLabels);
+  changeElementsBorderColor(colorInputBorder, formInputs);
+  hideElements(formErrors);
 }
 
 // FUNCTIONS
@@ -123,21 +122,22 @@ function displayAgeCalculations(years, months, days) {
   updateUnitText(daysUnit, days, "day", "days");
 }
 
-// EVENT LISTENER CALLBACK FUNCTION
+// EVENT LISTENER CALLBACK FUNCTIONS
 function handleFormBtnClick(e) {
   const formBtn = e.target.closest(".form__btn");
   if (!formBtn) return;
 
-  // Error handler
+  // Check if birthday, birth month, and birth year are all valid
   const isDayValid = isValidDay(dayInput.value);
   const isMonthValid = isValidMonth(monthInput.value);
   const isYearValid = isValidYear(yearInput.value);
 
   if (!isDayValid || !isMonthValid || !isYearValid) return;
 
+  // Reset labels' color and inputs' border color back to default and hide error messages
   resetValidationStyles();
 
-  // Add a leading 0 to input elements
+  // Add a leading 0 to both day and month input values
   addLeadingZero(dayInput);
   addLeadingZero(monthInput);
 
@@ -151,14 +151,37 @@ function handleFormBtnClick(e) {
   displayAgeCalculations(years, months, days);
 }
 
-// ERROR HANDLING
+function checkIfAllInputsEmpty(e) {
+  const target = e.target;
+
+  if (target.classList.contains("form__input")) {
+    const inputs = formLabelsContainer.querySelectorAll(".form__input");
+    const areAllEmpty = Array.from(inputs).every((input) =>
+      isInputEmpty(input.value)
+    );
+
+    if (areAllEmpty) {
+      // Reset calculation numbers back to default
+      calculationNumbers.forEach((el) => {
+        el.textContent = "- -";
+      });
+
+      // Reset units back to default
+      yearsUnit.textContent = "years";
+      monthsUnit.textContent = "months";
+      daysUnit.textContent = "days";
+    }
+  }
+}
+
+// VALIDATION FUNCTIONS
 function isValidDate(birthDay) {
-  // Check if a date is greater than the number of days in a month
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const birthMonth = parseInt(monthInput.value);
   const daysInBirthMonth = new Date(currentYear, birthMonth, 0).getDate();
 
+  // Check if a birth date like 29 or 30 is greater than the number of days in a birth month
   if (birthDay > daysInBirthMonth) {
     handleInvalidInput(formErrorDay, "Must be a valid date");
     return false;
@@ -175,6 +198,7 @@ function isValidDay(birthDayValue) {
     return false;
   }
 
+  // Check if birthday is negative, 0, greater than 31, or is not a number
   if (!(birthDay > 0) || birthDay > 31 || isNaN(birthDayValue)) {
     handleInvalidInput(formErrorDay, "Must be a valid day");
     return false;
@@ -193,6 +217,7 @@ function isValidMonth(birthMonthValue) {
     return false;
   }
 
+  // Check if birth month is negative, 0, greather than 12, or is not a number
   if (!(birthMonth > 0) || birthMonth > 12 || isNaN(birthMonthValue)) {
     handleInvalidInput(formErrorMonth, "Must be a valid month");
     return false;
@@ -211,6 +236,7 @@ function isValidYear(birthYearValue) {
     return false;
   }
 
+  // Check if birth year is a negative number or is not a number at all
   if (birthYear < 0 || isNaN(birthYearValue)) {
     handleInvalidInput(formErrorYear, "Must be a valid year");
     return false;
@@ -225,21 +251,6 @@ function isValidYear(birthYearValue) {
   return true;
 }
 
-// EVENT LISTENER
+// EVENT LISTENERS
 formBtn.addEventListener("click", handleFormBtnClick);
-// formLabels.addEventListener("input", function (e) {
-//   const target = e.target;
-
-//   if (target.tagName === "INPUT") {
-//     const inputs = formLabels.querySelectorAll(".form__input");
-//     const areAllEmpty = Array.from(inputs).every((input) =>
-//       isInputEmpty(input.value)
-//     );
-
-//     if (areAllEmpty) {
-//       forEach.calculationNumbers((el) => {
-//         el.textContent = "- -";
-//       });
-//     }
-//   }
-// });
+formLabelsContainer.addEventListener("input", checkIfAllInputsEmpty);
