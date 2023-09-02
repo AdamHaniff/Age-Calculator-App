@@ -16,7 +16,7 @@ const daysUnit = document.getElementById("calculation-unit-days");
 const formLabelsContainer = document.querySelector(".form__labels");
 const formLabels = document.querySelectorAll(".form__label");
 const formInputs = document.querySelectorAll(".form__input");
-const formErrors = document.querySelectorAll(".form__error");
+const formErrors = Array.from(document.querySelectorAll(".form__error"));
 const formErrorDay = document.getElementById("form-error-day");
 const formErrorMonth = document.getElementById("form-error-month");
 const formErrorYear = document.getElementById("form-error-year");
@@ -67,9 +67,13 @@ function isInputEmpty(inputValue) {
 }
 
 function hideElements(elements) {
-  elements.forEach((el) => {
-    el.classList.add("hidden");
-  });
+  if (Array.isArray(elements)) {
+    elements.forEach((el) => {
+      el.classList.add("hidden");
+    });
+  } else {
+    elements.classList.add("hidden");
+  }
 }
 
 function resetValidationStyles() {
@@ -131,8 +135,9 @@ function handleFormBtnClick(e) {
   const isDayValid = isValidDay(dayInput.value);
   const isMonthValid = isValidMonth(monthInput.value);
   const isYearValid = isValidYear(yearInput.value);
+  const anyErrors = !isDayValid || !isMonthValid || !isYearValid;
 
-  if (!isDayValid || !isMonthValid || !isYearValid) return;
+  if (anyErrors) return;
 
   // Reset labels' color and inputs' border color back to default and hide error messages
   resetValidationStyles();
@@ -206,6 +211,9 @@ function isValidDay(birthDayValue) {
 
   if (!isValidDate(birthDay)) return false;
 
+  // Hide error message if there is one
+  hideElements(formErrorDay);
+
   return true;
 }
 
@@ -222,6 +230,9 @@ function isValidMonth(birthMonthValue) {
     handleInvalidInput(formErrorMonth, "Must be a valid month");
     return false;
   }
+
+  // Hide error message if there is one
+  hideElements(formErrorMonth);
 
   return true;
 }
@@ -247,6 +258,9 @@ function isValidYear(birthYearValue) {
     handleInvalidInput(formErrorYear, "Must be in the past");
     return false;
   }
+
+  // Hide error message if there is one
+  hideElements(formErrorYear);
 
   return true;
 }
