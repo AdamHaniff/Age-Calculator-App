@@ -122,6 +122,21 @@ body {
   color: #151515;
 }
 
+@media (max-width: 23.4375em) {
+  .app-container {
+    padding: 4.8rem 6.4%;
+  }
+  .form__label {
+    max-width: 29.4%;
+  }
+  .form__input {
+    font-size: 1.8rem;
+    max-width: 100%;
+  }
+  .calculation {
+    font-size: 5rem;
+  }
+}
 .hidden {
   display: none;
 }/*# sourceMappingURL=main.css.map */
