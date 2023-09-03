@@ -23,7 +23,8 @@ body {
 }
 
 html,
-body {
+body,
+main {
   height: 100%;
 }
 
@@ -46,6 +47,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.3rem;
   text-transform: uppercase;
+  max-width: initial;
 }
 .form__input {
   padding: 1.2rem 1.6rem;
@@ -122,7 +124,7 @@ body {
   color: #151515;
 }
 
-@media (max-width: 23.4375em) {
+@media only screen and (max-width: 23.4375em) {
   .app-container {
     padding: 4.8rem 6.4%;
   }
@@ -130,11 +132,90 @@ body {
     max-width: 29.4%;
   }
   .form__input {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     max-width: 100%;
   }
   .calculation {
     font-size: 5rem;
+  }
+}
+@media only screen and (min-width: 48em) {
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .app-container {
+    max-width: 59.15rem;
+    padding: 5.2rem;
+    margin: 0;
+  }
+  .form__labels {
+    gap: 2.4rem;
+  }
+  .form__label {
+    font-size: 1.3rem;
+    letter-spacing: 0.325rem;
+    max-width: 12.35rem;
+  }
+  .form__input {
+    max-width: 100%;
+    margin-top: 0.6rem;
+    font-size: 2.6rem;
+    letter-spacing: 0.026rem;
+  }
+  .form__error {
+    font-size: 1.3rem;
+    margin-top: 0.6rem;
+  }
+  .calculation {
+    font-size: 7.9rem;
+    line-height: 8.8rem;
+    letter-spacing: -0.16rem;
+  }
+}
+@media only screen and (min-width: 90em) {
+  .app-container {
+    max-width: 84rem;
+    width: 84rem;
+    padding: 5.6rem;
+  }
+  .form__labels {
+    gap: 3.2rem;
+    margin-bottom: 4.75rem;
+  }
+  .form__label {
+    font-size: 1.4rem;
+    letter-spacing: 0.35rem;
+    max-width: 16rem;
+  }
+  .form__input {
+    margin-top: 0.8rem;
+    font-size: 3.2rem;
+    letter-spacing: 0.032rem;
+  }
+  .form__error {
+    font-size: 1.4rem;
+    margin-top: 0.8rem;
+  }
+  .form__line-btn-container {
+    width: 63.2rem;
+    margin-bottom: 4.75rem;
+  }
+  .form__btn {
+    left: 100%;
+    transform: translate(0, -50%);
+    width: 9.6rem;
+    height: 9.6rem;
+  }
+  .form__btn-icon {
+    width: 4.4rem;
+    height: 4.4rem;
+  }
+  .calculation {
+    font-size: 10.4rem;
+    line-height: 11.44rem;
+    letter-spacing: -0.208rem;
   }
 }
 .hidden {

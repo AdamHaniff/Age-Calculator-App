@@ -47,11 +47,14 @@ body {
 }
 
 html,
-body {
+body,
+main {
   height: 100%;
 }
 
-// ********* MOBILE LAYOUT *********
+// ********* MOBILE LAYOUTS *********
+
+// ********** 375px LAYOUT **********
 .app-container {
   max-width: 34.3rem;
   padding: 4.8rem 2.4rem;
@@ -74,6 +77,7 @@ body {
     font-weight: $font-weight-bold;
     letter-spacing: 0.3rem;
     text-transform: uppercase;
+    max-width: initial;
   }
 
   &__input {
@@ -161,7 +165,7 @@ body {
 }
 
 // *** 320px - 374px MEDIA QUERY ****
-@media (max-width: 23.4375em) {
+@media only screen and (max-width: 23.4375em) {
   .app-container {
     padding: 4.8rem 6.4%;
   }
@@ -173,7 +177,7 @@ body {
     }
 
     &__input {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       max-width: 100%;
     }
   }
@@ -181,6 +185,115 @@ body {
   // ********* CALCULATION *********
   .calculation {
     font-size: 5rem;
+  }
+}
+
+// ********* TABLET LAYOUT **********
+
+// ******* 768px MEDIA QUERY ********
+@media only screen and (min-width: 48em) {
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .app-container {
+    max-width: 59.15rem;
+    padding: 5.2rem;
+    margin: 0;
+  }
+
+  // ************** FORM ************
+  .form {
+    &__labels {
+      gap: 2.4rem;
+    }
+
+    &__label {
+      font-size: 1.3rem;
+      letter-spacing: 0.325rem;
+      max-width: 12.35rem;
+    }
+
+    &__input {
+      max-width: 100%;
+      margin-top: 0.6rem;
+      font-size: 2.6rem;
+      letter-spacing: 0.026rem;
+    }
+
+    &__error {
+      font-size: 1.3rem;
+      margin-top: 0.6rem;
+    }
+  }
+
+  // ********* CALCULATION **********
+  .calculation {
+    font-size: 7.9rem;
+    line-height: 8.8rem;
+    letter-spacing: -0.16rem;
+  }
+}
+
+// ******** DESKTOP LAYOUTS ********
+
+// ******* 1440px MEDIA QUERY *******
+@media only screen and (min-width: 90em) {
+  .app-container {
+    max-width: 84rem;
+    width: 84rem;
+    padding: 5.6rem;
+  }
+
+  // ************* FORM *************
+  .form {
+    &__labels {
+      gap: 3.2rem;
+      margin-bottom: 4.75rem;
+    }
+
+    &__label {
+      font-size: 1.4rem;
+      letter-spacing: 0.35rem;
+      max-width: 16rem;
+    }
+
+    &__input {
+      margin-top: 0.8rem;
+      font-size: 3.2rem;
+      letter-spacing: 0.032rem;
+    }
+
+    &__error {
+      font-size: 1.4rem;
+      margin-top: 0.8rem;
+    }
+
+    &__line-btn-container {
+      width: 63.2rem;
+      margin-bottom: 4.75rem;
+    }
+
+    &__btn {
+      left: 100%;
+      transform: translate(0, -50%);
+      width: 9.6rem;
+      height: 9.6rem;
+
+      &-icon {
+        width: 4.4rem;
+        height: 4.4rem;
+      }
+    }
+  }
+
+  // ********** CALCULATION *********
+  .calculation {
+    font-size: 10.4rem;
+    line-height: 11.44rem;
+    letter-spacing: -0.208rem;
   }
 }
 
