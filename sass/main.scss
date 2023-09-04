@@ -6,8 +6,10 @@ $color-app-background: #fff;
 $color-input-label: #716f6f;
 $color-input-border: #dcdcdc;
 $color-input-text: #151515;
+$color-input-caret: #854dff;
 $color-horizontal-line: #dcdcdc;
 $color-button-background: #854dff;
+$color-button-hover: #151515;
 $color-calculation-number: #854dff;
 $color-calculation-unit: #151515;
 $color-error: #ff5959;
@@ -91,6 +93,7 @@ main {
     font-size: 2rem;
     font-weight: $font-weight-bold;
     letter-spacing: 0.02rem;
+    caret-color: $color-input-caret;
 
     &::placeholder {
       color: $color-placeholder;
@@ -139,6 +142,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all 0.3s;
   }
 }
 
@@ -238,6 +242,18 @@ main {
 }
 
 // ******** DESKTOP LAYOUTS ********
+
+// ****** DESKTOP HOVER STATES ******
+// ******* 992px MEDIA QUERY ********
+@media only screen and (min-width: 62em) {
+  // ************* FORM *************
+  .form {
+    &__btn:hover {
+      cursor: pointer;
+      background: $color-button-hover;
+    }
+  }
+}
 
 // ******* 1440px MEDIA QUERY *******
 @media only screen and (min-width: 90em) {
