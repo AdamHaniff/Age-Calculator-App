@@ -20,6 +20,7 @@ $color-input-focus: #854dff;
   --color-error: #{$color-error};
   --color-input-label: #{$color-input-label};
   --color-input-border: #{$color-input-border};
+  --color-input-focus: #{$color-input-focus};
 }
 
 // ********** FONT-FAMILY ***********
@@ -93,7 +94,6 @@ main {
     font-size: 2rem;
     font-weight: $font-weight-bold;
     letter-spacing: 0.02rem;
-    caret-color: $color-input-caret;
 
     &::placeholder {
       color: $color-placeholder;
@@ -101,7 +101,6 @@ main {
 
     &:focus {
       outline: none;
-      border-color: $color-input-focus;
     }
 
     &:-webkit-autofill {

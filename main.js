@@ -29,6 +29,10 @@ const colorInputLabel = getComputedStyle(
 const colorInputBorder = getComputedStyle(
   document.documentElement
 ).getPropertyValue("--color-input-border");
+const colorInputFocus = getComputedStyle(
+  document.documentElement
+).getPropertyValue("--color-input-focus");
+let anyErrors;
 
 // HELPER FUNCTIONS
 function updateUnitText(element, value, singularText, pluralText) {
@@ -135,7 +139,7 @@ function handleFormBtnClick(e) {
   const isDayValid = isValidDay(dayInput.value);
   const isMonthValid = isValidMonth(monthInput.value);
   const isYearValid = isValidYear(yearInput.value);
-  const anyErrors = !isDayValid || !isMonthValid || !isYearValid;
+  anyErrors = !isDayValid || !isMonthValid || !isYearValid;
 
   if (anyErrors) return;
 
@@ -179,6 +183,32 @@ function checkIfAllInputsEmpty(e) {
   }
 }
 
+function handleInputFocusIn(e) {
+  const target = e.target;
+  const isFormInput = target.classList.contains("form__input");
+
+  // If there are any errors, change input's caret color back to initial value
+  if (anyErrors && isFormInput) {
+    target.style.caretColor = "initial";
+  }
+
+  // If there are no errors, change input's caret and border color to colorInputFocus
+  if (!anyErrors && isFormInput) {
+    target.style.caretColor = colorInputFocus;
+    target.style.borderColor = colorInputFocus;
+  }
+}
+
+function handleInputFocusOut(e) {
+  const target = e.target;
+  const isFormInput = target.classList.contains("form__input");
+
+  // If there are no errors, change the previously clicked input's border to colorInputBorder
+  if (!anyErrors && isFormInput) {
+    target.style.borderColor = colorInputBorder;
+  }
+}
+
 // VALIDATION FUNCTIONS
 function isValidDate(birthDay) {
   const currentDate = new Date();
@@ -218,7 +248,11 @@ function isValidDay(birthDayValue) {
 }
 
 function isValidMonth(birthMonthValue) {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1;
+  const currentYear = currentDate.getFullYear();
   const birthMonth = parseInt(birthMonthValue);
+  const birthYear = parseInt(yearInput.value);
 
   if (isInputEmpty(birthMonthValue)) {
     handleInvalidInput(formErrorMonth, "This field is required");
@@ -228,6 +262,11 @@ function isValidMonth(birthMonthValue) {
   // Check if birth month is negative, 0, greather than 12, or is not a number
   if (!(birthMonth > 0) || birthMonth > 12 || isNaN(birthMonthValue)) {
     handleInvalidInput(formErrorMonth, "Must be a valid month");
+    return false;
+  }
+
+  if (birthYear === currentYear && birthMonth > currentMonth) {
+    handleInvalidInput(formErrorMonth, "Must be in the past");
     return false;
   }
 
@@ -268,3 +307,5 @@ function isValidYear(birthYearValue) {
 // EVENT LISTENERS
 formBtn.addEventListener("click", handleFormBtnClick);
 formLabelsContainer.addEventListener("input", checkIfAllInputsEmpty);
+formLabelsContainer.addEventListener("focusin", handleInputFocusIn);
+formLabelsContainer.addEventListener("focusout", handleInputFocusOut);

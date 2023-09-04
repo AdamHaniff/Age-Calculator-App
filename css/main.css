@@ -2,6 +2,7 @@
   --color-error: #ff5959;
   --color-input-label: #716f6f;
   --color-input-border: #dcdcdc;
+  --color-input-focus: #854dff;
 }
 
 *,
@@ -60,7 +61,6 @@ main {
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.02rem;
-  caret-color: #854dff;
 }
 .form__input::-moz-placeholder {
   color: rgba(21, 21, 21, 0.5);
@@ -70,7 +70,6 @@ main {
 }
 .form__input:focus {
   outline: none;
-  border-color: #854dff;
 }
 .form__input:-webkit-autofill {
   background-color: transparent;
