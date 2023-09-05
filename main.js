@@ -86,13 +86,20 @@ function resetValidationStyles() {
   hideElements(formErrors);
 }
 
+function getCurrentDate() {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth() + 1;
+  const currentDay = currentDate.getDate();
+
+  return { currentDate, currentYear, currentMonth, currentDay };
+}
+
 // FUNCTIONS
 function calculateAge(birthYear, birthMonth, birthDay) {
   // Get current date
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
+  const { currentDate, currentYear, currentDay } = getCurrentDate();
   const currentMonth = currentDate.getMonth();
-  const currentDay = currentDate.getDate();
 
   // Calculate age
   let years = currentYear - birthYear;
@@ -103,8 +110,8 @@ function calculateAge(birthYear, birthMonth, birthDay) {
   if (days < 0) {
     months--;
     const daysInPreviousMonth = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
+      currentYear,
+      currentMonth,
       0
     ).getDate();
     days += daysInPreviousMonth;
@@ -211,8 +218,7 @@ function handleInputFocusOut(e) {
 
 // VALIDATION FUNCTIONS
 function isValidDate(birthDay) {
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
+  const { currentYear } = getCurrentDate();
   const birthMonth = parseInt(monthInput.value);
   const daysInBirthMonth = new Date(currentYear, birthMonth, 0).getDate();
 
@@ -226,6 +232,9 @@ function isValidDate(birthDay) {
 }
 
 function isValidDay(birthDayValue) {
+  const { currentYear, currentMonth, currentDay } = getCurrentDate();
+  const birthYear = parseInt(yearInput.value);
+  const birthMonth = parseInt(monthInput.value);
   const birthDay = parseInt(birthDayValue);
 
   if (isInputEmpty(birthDayValue)) {
@@ -241,6 +250,16 @@ function isValidDay(birthDayValue) {
 
   if (!isValidDate(birthDay)) return false;
 
+  // Check if birthday is in the future
+  if (
+    birthYear === currentYear &&
+    birthMonth === currentMonth &&
+    birthDay > currentDay
+  ) {
+    handleInvalidInput(formErrorDay, "Must be in the past");
+    return false;
+  }
+
   // Hide error message if there is one
   hideElements(formErrorDay);
 
@@ -248,9 +267,7 @@ function isValidDay(birthDayValue) {
 }
 
 function isValidMonth(birthMonthValue) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1;
-  const currentYear = currentDate.getFullYear();
+  const { currentYear, currentMonth } = getCurrentDate();
   const birthMonth = parseInt(birthMonthValue);
   const birthYear = parseInt(yearInput.value);
 
@@ -265,6 +282,7 @@ function isValidMonth(birthMonthValue) {
     return false;
   }
 
+  // Check if birth month is in the future
   if (birthYear === currentYear && birthMonth > currentMonth) {
     handleInvalidInput(formErrorMonth, "Must be in the past");
     return false;
@@ -277,9 +295,8 @@ function isValidMonth(birthMonthValue) {
 }
 
 function isValidYear(birthYearValue) {
+  const { currentYear } = getCurrentDate();
   const birthYear = parseInt(birthYearValue);
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
 
   if (isInputEmpty(birthYearValue)) {
     handleInvalidInput(formErrorYear, "This field is required");
