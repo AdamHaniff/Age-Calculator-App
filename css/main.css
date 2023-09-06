@@ -149,6 +149,7 @@ main {
   .app-container {
     max-width: 59.15rem;
     padding: 5.2rem;
+    border-radius: 2.4rem 2.4rem 15rem 2.4rem;
     margin: 0;
   }
   .form__labels {
@@ -186,6 +187,7 @@ main {
     max-width: 84rem;
     width: 84rem;
     padding: 5.6rem;
+    border-radius: 2.4rem 2.4rem 20rem 2.4rem;
   }
   .form__labels {
     gap: 3.2rem;

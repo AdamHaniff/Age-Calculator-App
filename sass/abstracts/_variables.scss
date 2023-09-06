@@ -1,0 +1,32 @@
+// *********** STYLE GUIDE **********
+
+// ************* COLORS *************
+$color-body-background: #f0f0f0;
+$color-app-background: #fff;
+$color-input-label: #716f6f;
+$color-input-border: #dcdcdc;
+$color-input-text: #151515;
+$color-input-caret: #854dff;
+$color-horizontal-line: #dcdcdc;
+$color-button-background: #854dff;
+$color-button-hover: #151515;
+$color-calculation-number: #854dff;
+$color-calculation-unit: #151515;
+$color-error: #ff5959;
+$color-placeholder: rgb(21, 21, 21, 0.5);
+$color-input-focus: #854dff;
+
+// ************** ROOT **************
+:root {
+  --color-error: #{$color-error};
+  --color-input-label: #{$color-input-label};
+  --color-input-border: #{$color-input-border};
+  --color-input-focus: #{$color-input-focus};
+}
+
+// ********** FONT-FAMILY ***********
+$font-primary: "Poppins", sans-serif;
+
+// ********** FONT-WEIGHTS **********
+$font-weight-bold: 700;
+$font-weight-extraBold: 800;

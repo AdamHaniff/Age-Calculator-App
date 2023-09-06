@@ -1,0 +1,72 @@
+// ******** DESKTOP LAYOUTS ********
+
+// ****** DESKTOP HOVER STATES ******
+// ******* 992px MEDIA QUERY ********
+@media only screen and (min-width: 62em) {
+  // ************* FORM *************
+  .form {
+    &__btn:hover {
+      cursor: pointer;
+      background: $color-button-hover;
+    }
+  }
+}
+
+// ******* 1440px MEDIA QUERY *******
+@media only screen and (min-width: 90em) {
+  .app-container {
+    max-width: 84rem;
+    width: 84rem;
+    padding: 5.6rem;
+    border-radius: 2.4rem 2.4rem 20rem 2.4rem;
+  }
+
+  // ************* FORM *************
+  .form {
+    &__labels {
+      gap: 3.2rem;
+      margin-bottom: 4.75rem;
+    }
+
+    &__label {
+      font-size: 1.4rem;
+      letter-spacing: 0.35rem;
+      max-width: 16rem;
+    }
+
+    &__input {
+      margin-top: 0.8rem;
+      font-size: 3.2rem;
+      letter-spacing: 0.032rem;
+    }
+
+    &__error {
+      font-size: 1.4rem;
+      margin-top: 0.8rem;
+    }
+
+    &__line-btn-container {
+      width: 63.2rem;
+      margin-bottom: 4.75rem;
+    }
+
+    &__btn {
+      left: 100%;
+      transform: translate(0, -50%);
+      width: 9.6rem;
+      height: 9.6rem;
+
+      &-icon {
+        width: 4.4rem;
+        height: 4.4rem;
+      }
+    }
+  }
+
+  // ********** CALCULATION *********
+  .calculation {
+    font-size: 10.4rem;
+    line-height: 11.44rem;
+    letter-spacing: -0.208rem;
+  }
+}
